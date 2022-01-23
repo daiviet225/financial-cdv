@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Navigate, Route, Routes } from "react-router-dom";
+import FrontPage from "./pages/frontPage";
+import Login from "./pages/login";
+import Signup from "./pages/signUp";
+import NotFound from "./components/NotFound";
+import Main from "./pages/main";
+import { useAppSelector } from "./hooks/storeHooks";
 
-function App() {
+const App = () => {
+  const isLogin = useAppSelector((state) => state.Login.isLogin);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path="/sign-up" element={<Signup />} />
+        <Route path="/login" element={<Login />}></Route>
+        {!isLogin && (
+          <>
+            <Route path="/frontPage" element={<FrontPage />}></Route>
+            <Route path="/" element={<Navigate to={"/frontPage"} />} />
+          </>
+        )}
+        {isLogin && (
+          <>
+            <Route path="/main" element={<Main />}></Route>
+            <Route path="/" element={<Navigate to={`/main`} />} />
+          </>
+        )}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
-}
+};
 
 export default App;
