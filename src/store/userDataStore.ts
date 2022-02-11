@@ -17,6 +17,7 @@ const userDatainitialState: userDatainitialType = {
     expense: [],
     toBuy: [],
     income: 0,
+    chartData: [],
   },
 };
 
@@ -34,6 +35,7 @@ const userDataStore = createSlice({
         expense: [],
         toBuy: [],
         income: 0,
+        chartData: [],
       };
       state.fireBaseLocation = "";
     },
@@ -69,6 +71,7 @@ const userDataStore = createSlice({
       }
 
       state.data.thisMonth.spending += action.payload.cost;
+      state.data.chartData[5] = state.data.thisMonth.spending;
 
       state.data.balance -= action.payload.cost;
     },
@@ -81,6 +84,7 @@ const userDataStore = createSlice({
       state.data.expense = filter;
 
       state.data.thisMonth.spending -= action.payload.cost;
+      state.data.chartData[5] = state.data.thisMonth.spending;
 
       state.data.balance += action.payload.cost;
     },
@@ -93,9 +97,20 @@ const userDataStore = createSlice({
       }
     },
 
+    removeToBuy(state, action: { payload: number }) {
+      const filter = state.data.toBuy.filter(
+        (x, index) => index !== action.payload
+      );
+
+      state.data.toBuy = filter;
+    },
+
     MonthlyUpdateTest(state) {
       const oldData = { ...state.data };
       const oldthisMonthData = { ...state.data.thisMonth };
+
+      state.data.chartData.shift();
+      state.data.chartData.push(oldthisMonthData.spending);
 
       state.data.lastMonth = oldthisMonthData;
       state.data.balance = oldData.balance + oldData.income;

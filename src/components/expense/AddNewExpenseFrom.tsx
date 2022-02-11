@@ -1,24 +1,20 @@
 import { ChangeEvent, FC, FormEvent, useState } from "react";
+import React from "react";
 import { useRef } from "react";
 import { useAppDispatch } from "../../hooks/storeHooks";
 import { userDataStoreAction } from "../../store/userDataStore";
+import { Dialog } from "@headlessui/react";
 
-//fuckin date
-const today = new Date();
-const day = today.getDate();
-const month = today.getMonth() + 1;
-const year = today.getFullYear();
+const AddNewExpenseFrom: FC<{ openAddExpense: () => void; isOpen: boolean }> = (
+  props
+) => {
+  const today = new Date();
+  const day = today.getDate();
+  const month = today.getMonth() + 1;
+  const year = today.getFullYear();
+  const defaultValue = today.toLocaleDateString("en-CA");
 
-const AddNewExpenseFrom: FC<{ openAddExpense: () => void }> = (props) => {
-  //date
-  let perfectDay: string;
-  if (month < 10) {
-    perfectDay = `${year}-${"0" + month}-${day}`;
-  } else {
-    perfectDay = `${year}-${month}-${day}`;
-  }
-
-  const [date, setDate] = useState(perfectDay);
+  const [date, setDate] = useState(defaultValue);
   const nameRef = useRef<HTMLInputElement>(null);
   const costRef = useRef<HTMLInputElement>(null);
   const [nameErro, setNameError] = useState(false);
@@ -84,60 +80,83 @@ const AddNewExpenseFrom: FC<{ openAddExpense: () => void }> = (props) => {
   };
 
   return (
-    <form className="bg-blue-200 rounded-md p-2 mx-10" onSubmit={addNewExpense}>
-      <div className="flex justify-between items-center">
-        <label htmlFor="for">FOR</label>
-        <input
-          type="text"
-          id="for"
-          ref={nameRef}
-          className={`rounded-md p-1 ${nameErro && "bg-red-300"}`}
-          onFocus={unError}
-          placeholder="Spending"
-        />
-      </div>
-      <div className="flex justify-between items-center">
-        <label htmlFor="cost">COST</label>
-        <input
-          type="number"
-          id="cost"
-          ref={costRef}
-          className={`rounded-md p-1 ${costErro && "bg-red-300"}`}
-          onFocus={unError}
-          placeholder="0.00"
-        />
-      </div>
+    <Dialog
+      open={props.isOpen}
+      onClose={() => openAddExpense()}
+      className="fixed z-10 inset-0 overflow-y-auto"
+    >
+      <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
-      <div className="flex justify-between items-center">
-        <label htmlFor="date">DATE</label>
-        <input
-          type="date"
-          id="date"
-          defaultValue={perfectDay}
-          className={`rounded-md p-1 ${dateError && "bg-red-300"}`}
-          onFocus={unError}
-          onChange={dateChangeHandler}
-        />
-      </div>
-      {dateError && <p className="text-center">incorrect date</p>}
+      <form
+        className="bg-white rounded-md p-2 mx-auto relative w-1/4 mt-36 flex gap-1 flex-col border-4 border-emerald-500 select-none"
+        onSubmit={addNewExpense}
+      >
+        <div className="flex justify-between items-center ">
+          <label htmlFor="for" className="w-1/4 text-center text-lg">
+            For
+          </label>
+          <input
+            type="text"
+            id="for"
+            ref={nameRef}
+            className={`rounded-md p-1 w-3/4 ${
+              nameErro && "bg-red-300"
+            } focus:border-emerald-400 focus:ring-emerald-400`}
+            onFocus={unError}
+            placeholder="Spending"
+          />
+        </div>
+        <div className="flex justify-between items-center">
+          <label htmlFor="cost" className="w-1/4 text-center text-lg">
+            Cost
+          </label>
+          <input
+            type="number"
+            id="cost"
+            ref={costRef}
+            className={`rounded-md p-1 w-3/4 ${
+              costErro && "bg-red-300"
+            } focus:border-emerald-400 focus:ring-emerald-400`}
+            onFocus={unError}
+            placeholder="0.00"
+          />
+        </div>
 
-      <div className="flex gap-5 justify-center mt-2">
-        <button
-          className="text-black text-xl bg-slate-200 rounded-md p-2 hover:bg-slate-300"
-          onClick={addNewExpense}
-        >
-          Add
-        </button>
-        <button
-          className="text-black text-xl bg-slate-200 rounded-md p-2 hover:bg-slate-300"
-          type="button"
-          onClick={openAddExpense}
-        >
-          Cancel
-        </button>
-      </div>
-    </form>
+        <div className="flex justify-between items-center">
+          <label htmlFor="date" className="w-1/4 text-center text-lg">
+            Date
+          </label>
+          <input
+            type="date"
+            id="date"
+            defaultValue={defaultValue}
+            className={`rounded-md p-1 w-3/4 ${
+              dateError && "bg-red-300"
+            } focus:border-emerald-400 focus:ring-emerald-400`}
+            onFocus={unError}
+            onChange={dateChangeHandler}
+          />
+        </div>
+        {dateError && <p className="text-center">incorrect date</p>}
+
+        <div className="flex gap-5 justify-center mt-2">
+          <button
+            className="text-white bg-emerald-500 rounded-md p-2 hover:bg-emerald-400 select-none"
+            onClick={addNewExpense}
+          >
+            Add
+          </button>
+          <button
+            className="text-white bg-red-500 rounded-md p-2 hover:bg-red-400 select-none"
+            type="button"
+            onClick={openAddExpense}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </Dialog>
   );
 };
 
-export default AddNewExpenseFrom;
+export default React.memo(AddNewExpenseFrom);

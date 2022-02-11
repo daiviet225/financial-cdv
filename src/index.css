@@ -9,22 +9,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #57534e;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-.hideScrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.hideScrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.inShadow {
-  box-shadow: white inset 0px 0px 200px;
 }

@@ -11,19 +11,22 @@ function* createUserDataOnSignUp(action: {
 }) {
   const { email, userName } = action.payload;
   const newEmailRemove = email.split("@")[0];
-  const PlankuserData = {
+  const BlankuserData = {
     email: email,
     balance: 0,
     thisMonth: { limit: 0, spending: 0 },
     lastMonth: { limit: 0, spending: 0 },
     user: userName,
     income: 0,
+    expense: [],
+    toBuy: [],
+    chartData: [0, 0, 0, 0, 0, 0],
   };
 
   yield call(() => {
     axios.post(
       `https://react-test-7684d-default-rtdb.asia-southeast1.firebasedatabase.app/userData/${newEmailRemove}.json`,
-      PlankuserData
+      BlankuserData
     );
   });
 }
@@ -50,6 +53,7 @@ export function* rootsaga() {
   yield takeEvery(userDataStoreAction.updateIncome, uploadData);
   yield takeEvery(userDataStoreAction.updateBalance, uploadData);
   yield takeEvery(userDataStoreAction.updateLimit, uploadData);
+  yield takeEvery(userDataStoreAction.removeToBuy, uploadData);
 
   // signup action
   yield takeLatest(loginStoreAction.signUp.type, createUserDataOnSignUp);

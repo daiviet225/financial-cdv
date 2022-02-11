@@ -19,4 +19,5 @@ export type userDataType = {
   expense: expense[];
   toBuy: toBuyType[];
   income: number;
+  chartData: number[];
 };

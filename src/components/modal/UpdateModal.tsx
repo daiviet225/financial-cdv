@@ -3,6 +3,7 @@ import { FC, FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
 import useInputWithInitialValue from "../../hooks/userInputWithInitialValue";
 import { userDataStoreAction } from "../../store/userDataStore";
+import React from "react";
 
 const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
   props
@@ -12,18 +13,14 @@ const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
 
   const {
     value: income,
-    hasError: incomehasError,
     valueChangeHandler: incomeChangeHandler,
     inputBlurHandler: incomeBlurHandler,
-    reset: incomeReset,
   } = useInputWithInitialValue((value) => value > 0, userData.income);
 
   const {
     value: balance,
-    hasError: balancehasError,
     valueChangeHandler: balanceChangeHandler,
     inputBlurHandler: balanceBlurHandler,
-    reset: balanceReset,
   } = useInputWithInitialValue((value) => value > 0, userData.balance);
 
   const {
@@ -31,26 +28,19 @@ const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
     hasError: limithasError,
     valueChangeHandler: limitChangeHandler,
     inputBlurHandler: limitBlurHandler,
-    reset: limitReset,
   } = useInputWithInitialValue((value) => value > 0, userData.thisMonth.limit);
 
   const changeOpenState = () => {
     props.changeOpenState();
   };
 
-  const updateIncome = (event: FormEvent) => {
+  const updateBalanceIncomeLimit = (event: FormEvent) => {
     event.preventDefault();
-    dispatch(userDataStoreAction.updateIncome(+income));
-  };
-
-  const updateBalance = (event: FormEvent) => {
-    event.preventDefault();
-    dispatch(userDataStoreAction.updateBalance(+balance));
-  };
-
-  const updateLimit = (event: FormEvent) => {
-    event.preventDefault();
-    dispatch(userDataStoreAction.updateLimit(+limit));
+    if (!limithasError) {
+      dispatch(userDataStoreAction.updateLimit(+limit));
+      dispatch(userDataStoreAction.updateIncome(+income));
+      dispatch(userDataStoreAction.updateBalance(+balance));
+    }
   };
 
   return (
@@ -61,10 +51,13 @@ const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
     >
       <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
-      <div className="bg-white w-1/4 m-auto transform p-3 rounded-xl mt-32 flex flex-col gap-2">
-        <form onSubmit={updateIncome} className="flex justify-between">
-          <label htmlFor="income">Income</label>
-          <div className="flex gap-2">
+      <div className="bg-white w-1/4 m-auto relative p-3 rounded-xl mt-36 flex flex-col gap-2 border-4 border-green-500 select-none">
+        <form
+          onSubmit={updateBalanceIncomeLimit}
+          className="flex flex-col gap-2"
+        >
+          <div className="flex justify-between">
+            <label htmlFor="income">Income</label>
             <input
               type="number"
               name="income"
@@ -72,19 +65,11 @@ const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
               value={income}
               onBlur={incomeBlurHandler}
               onChange={incomeChangeHandler}
-              className="w-3/4 rounded-md p-1"
+              className="w-3/4 rounded-md p-1 focus:border-green-500 focus:ring-green-500"
             />
-            <button
-              onClick={updateIncome}
-              className="bg-blue-500 hover:bg-blue-600 p-1 rounded-md text-white"
-            >
-              update
-            </button>
           </div>
-        </form>
-        <form onSubmit={updateBalance} className="flex justify-between">
-          <label htmlFor="balance">Balance</label>
-          <div className="flex gap-2">
+          <div className="flex justify-between">
+            <label htmlFor="balance">Balance</label>
             <input
               type="number"
               name="balance"
@@ -92,19 +77,11 @@ const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
               value={balance}
               onBlur={balanceBlurHandler}
               onChange={balanceChangeHandler}
-              className="w-3/4 rounded-md p-1"
+              className="w-3/4 rounded-md p-1 focus:border-green-500 focus:ring-green-500"
             />
-            <button
-              onClick={updateBalance}
-              className="bg-blue-500 hover:bg-blue-600 p-1 rounded-md text-white"
-            >
-              update
-            </button>
           </div>
-        </form>
-        <form onSubmit={updateLimit} className="flex justify-between">
-          <label htmlFor="limit">Limit</label>
-          <div className="flex gap-2">
+          <div className="flex justify-between">
+            <label htmlFor="limit">Limit</label>
             <input
               type="number"
               id="limit"
@@ -112,13 +89,27 @@ const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
               value={limit}
               onBlur={limitBlurHandler}
               onChange={limitChangeHandler}
-              className="w-3/4 rounded-md p-1"
+              className="w-3/4 rounded-md p-1 focus:border-green-500 focus:ring-green-500"
             />
+          </div>{" "}
+          {limithasError && (
+            <p className="text-red-400 text-center">
+              please enter number bigger than 0
+            </p>
+          )}
+          <div className="flex justify-center gap-4 items-center">
             <button
-              onClick={updateLimit}
-              className="bg-blue-500 hover:bg-blue-600 p-1 rounded-md text-white"
+              onClick={updateBalanceIncomeLimit}
+              className="bg-green-500 hover:bg-green-600 p-2 rounded-md text-white"
             >
               update
+            </button>
+            <button
+              className="text-white bg-red-500 rounded-md p-2 hover:bg-red-400"
+              onClick={changeOpenState}
+              type="button"
+            >
+              close
             </button>
           </div>
         </form>
@@ -127,4 +118,4 @@ const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
   );
 };
 
-export default UpdateModal;
+export default React.memo(UpdateModal);

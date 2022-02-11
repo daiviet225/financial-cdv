@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { userDataStoreAction } from "../store/userDataStore";
 import { useAppDispatch, useAppSelector } from "../hooks/storeHooks";
-import MonthBalanceCard from "../components/MonthBalanceCard";
-import WalletCard from "../components/WalletCard";
+import MonthBalanceCard from "../components/monthBalanceCard/MonthBalanceCard";
+import WalletCard from "../components/walletcard/WalletCard";
 import ExpenseBox from "../components/expense/ExpenseBox";
 import ToBuyBox from "../components/toBuy/TobuyBox";
 import SideBar from "../components/SideBar";
@@ -43,17 +43,21 @@ const Main = () => {
       {failed ? (
         <p className="text-center">Error Loading Data </p>
       ) : (
-        <div className="flex p-5 gap-4 h-full">
-          <div className="w-1/2 flex flex-col gap-4">
-            <div className="flex gap-4 space-4">
+        <div className="flex p-4 gap-2 h-screen">
+          <div className="w-1/2 flex flex-col gap-2 ">
+            <div className="flex gap-2 h-1/2">
               <WalletCard />
               <MonthBalanceCard MonthData={userData.thisMonth} label="This" />
               <MonthBalanceCard MonthData={userData.lastMonth} label="Last" />
             </div>
-            <ChartCard />
+
+            <div className="h-1/2">
+              <ChartCard />
+            </div>
           </div>
+
           <div className="w-1/2">
-            <div className="flex gap-4 h-full">
+            <div className="flex gap-2 h-full">
               <ExpenseBox />
               <ToBuyBox />
             </div>
