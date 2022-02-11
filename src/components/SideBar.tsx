@@ -44,7 +44,7 @@ const SideBar: FC = (props) => {
               Co-LoGo
             </Link>
             {isLogin && (
-              <p className="text-4xl font-medium text-center">
+              <p className="text-2xl font-medium text-center break-words">
                 {userData.user}
               </p>
             )}
@@ -65,11 +65,11 @@ const SideBar: FC = (props) => {
             </button>
           </div>
 
-          <div className="flex-col flex gap-4 mb-4">
+          <div className="flex-col flex gap-4 mb-4 ">
             {isLogin ? (
               <>
                 <button
-                  className="bg-yellow-500 rounded-md text-xl p-2 font-medium hover:bg-yellow-300 select-none"
+                  className="bg-yellow-400 rounded-md text-xl p-2 font-medium hover:bg-yellow-300 text-white select-none"
                   onClick={logout}
                 >
                   Logout
