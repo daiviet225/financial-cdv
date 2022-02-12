@@ -62,17 +62,12 @@ const ChartCard = () => {
         data: userDataSpending,
         fill: true,
         backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)",
+        borderColor: "rgba(100,100,255,1)",
       },
     ],
   };
 
-  return (
-    <Line
-      data={data}
-      className="bg-white rounded-md border-4 border-blue-400 p-2 h-1/2"
-    />
-  );
+  return <Line data={data} />;
 };
 
 export default ChartCard;

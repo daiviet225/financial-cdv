@@ -51,7 +51,7 @@ const Main = () => {
               <MonthBalanceCard MonthData={userData.lastMonth} label="Last" />
             </div>
 
-            <div className="h-1/2">
+            <div className="bg-white rounded-md border-4 border-blue-400 p-2 h-1/2">
               <ChartCard />
             </div>
           </div>

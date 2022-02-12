@@ -32,7 +32,7 @@ const ExpenseBox = () => {
   };
 
   return (
-    <div className="w-1/2 bg-white rounded-md border-4 border-emerald-400 select-none">
+    <div className="w-1/2 bg-white rounded-md border-4 border-emerald-500 select-none">
       <div className="flex items-center justify-center gap-2 bg-emerald-100">
         <p className="text-center text-3xl my-2 font-medium select-none text-emerald-500">
           Spending
