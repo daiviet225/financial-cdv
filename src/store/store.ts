@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import loginStoreReducer from "./loginStore";
 import userDataStoreReducer from "./userDataStore";
 import createSagaMiddleware from "@redux-saga/core";
