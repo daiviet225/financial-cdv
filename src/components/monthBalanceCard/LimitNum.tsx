@@ -30,11 +30,27 @@ const LimitNum: FC<{ limit: number }> = (props) => {
         />
       ) : limit < 1000000000 ? (
         <>
-          <AnimatedNumbers animateToNumber={+overMB.toFixed(2)} />M
+          <AnimatedNumbers
+            configs={[
+              { mass: 1, tension: 130, friction: 40 },
+              { mass: 2, tension: 140, friction: 40 },
+              { mass: 3, tension: 130, friction: 40 },
+            ]}
+            animateToNumber={+overMB.toFixed(2)}
+          />
+          M
         </>
       ) : (
         <>
-          <AnimatedNumbers animateToNumber={+overMB.toFixed(2)} />B
+          <AnimatedNumbers
+            configs={[
+              { mass: 1, tension: 130, friction: 40 },
+              { mass: 2, tension: 140, friction: 40 },
+              { mass: 3, tension: 130, friction: 40 },
+            ]}
+            animateToNumber={+overMB.toFixed(2)}
+          />
+          B
         </>
       )}
     </div>

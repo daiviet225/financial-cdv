@@ -5,6 +5,7 @@ import { loginStoreAction } from "../store/loginStore";
 import { useAppDispatch } from "../hooks/storeHooks";
 import axios from "axios";
 import stonk from "../images/stonk2.jpg";
+import React from "react";
 
 const Login = () => {
   const [invalid, setInvalid] = useState(false);
@@ -48,6 +49,8 @@ const Login = () => {
         navigate(`/`, { replace: true });
       })
       .catch((error) => {
+        console.log(error);
+
         setInvalid(true);
       });
   };
@@ -55,7 +58,7 @@ const Login = () => {
   return (
     <>
       <div
-        className="h-screen flex justify-center bg-cover"
+        className="h-screen flex justify-center bg-cover select-none"
         style={{ backgroundImage: `url(${stonk})` }}
       >
         <div className="max-w-md w-full mt-32 bg-white h-fit p-5 rounded-md">
@@ -135,4 +138,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default React.memo(Login);

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useAppDispatch } from "../hooks/storeHooks";
 import { loginStoreAction } from "../store/loginStore";
 import stonk from "../images/stonk2.jpg";
+import React from "react";
 
 const Signup = () => {
   const [error, setError] = useState(false);
@@ -70,7 +71,7 @@ const Signup = () => {
 
   return (
     <div
-      className="h-screen bg-cover pt-32"
+      className="h-screen bg-cover pt-32 select-none"
       style={{ backgroundImage: `url(${stonk})` }}
     >
       <div className=" flex flex-col items-center justify-center bg-white w-1/4 p-3 mx-auto rounded-xl">
@@ -176,4 +177,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default React.memo(Signup);

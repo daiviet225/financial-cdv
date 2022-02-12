@@ -5,6 +5,7 @@ import { useAppSelector } from "../../hooks/storeHooks";
 import { PlusIcon } from "@heroicons/react/solid";
 import { toBuyType } from "../../type/userDataType";
 import ReactPaginate from "react-paginate";
+import React from "react";
 
 const SavingBox = () => {
   const [isAddToBuy, setIsAddToBuy] = useState(false);
@@ -84,4 +85,4 @@ const SavingBox = () => {
   );
 };
 
-export default SavingBox;
+export default React.memo(SavingBox);

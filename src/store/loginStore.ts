@@ -13,15 +13,15 @@ const loginStore = createSlice({
   reducers: {
     signUp(state, action: { payload: { email: string; userName: string } }) {},
     login(state, action: { payload: { token: string; email: string } }) {
-      state.isLogin = true;
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("email", action.payload.email);
+      state.isLogin = true;
     },
 
     logout(state) {
-      state.isLogin = false;
       localStorage.removeItem("token");
       localStorage.removeItem("email");
+      state.isLogin = false;
     },
   },
 });

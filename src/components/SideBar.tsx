@@ -21,7 +21,9 @@ const SideBar: FC = (props) => {
   };
 
   const logout = () => {
+    dispatch(userDataStoreAction.resetState());
     dispatch(loginStoreAction.logout());
+
     navigate("/", { replace: true });
   };
 
@@ -49,14 +51,6 @@ const SideBar: FC = (props) => {
               </p>
             )}
 
-            <button
-              className="bg-green-400 rounded-md text-xl p-2 font-medium text-white hover:bg-green-500"
-              onClick={() => {
-                dispatch(userDataStoreAction.MonthlyUpdateTest());
-              }}
-            >
-              next Month
-            </button>
             <button
               className="bg-green-400 rounded-md text-md p-2 font-medium text-white hover:bg-green-500"
               onClick={changeOpenState}

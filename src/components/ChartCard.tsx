@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { useAppSelector } from "../hooks/storeHooks";
+import React from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -39,15 +40,14 @@ const ChartCard = () => {
     "Dec",
   ];
 
-  let ChartLabels;
+  let ChartLabels = monthByName.slice(month - 2, month + 2);
 
   if (month === 0) {
     ChartLabels = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
   }
+
   if (month === 1) {
     ChartLabels = ["Dec", "Jan", "Feb", "Mar", "Apr", "May"];
-  } else {
-    ChartLabels = monthByName.slice(month - 2, month + 2);
   }
 
   const userDataSpending = useAppSelector(
@@ -70,4 +70,4 @@ const ChartCard = () => {
   return <Line data={data} />;
 };
 
-export default ChartCard;
+export default React.memo(ChartCard);

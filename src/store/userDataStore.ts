@@ -120,6 +120,23 @@ const userDataStore = createSlice({
 
       state.data.expense = [];
     },
+
+    resetState(state) {
+      state = {
+        fireBaseLocation: "",
+        data: {
+          email: "",
+          balance: 0,
+          thisMonth: { limit: 0, spending: 0 },
+          lastMonth: { limit: 0, spending: 0 },
+          user: "",
+          expense: [],
+          toBuy: [],
+          income: 0,
+          chartData: [],
+        },
+      };
+    },
   },
 });
 

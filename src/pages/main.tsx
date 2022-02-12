@@ -8,6 +8,7 @@ import ExpenseBox from "../components/expense/ExpenseBox";
 import ToBuyBox from "../components/toBuy/TobuyBox";
 import SideBar from "../components/SideBar";
 import ChartCard from "../components/ChartCard";
+import React from "react";
 
 const Main = () => {
   const [failed, setFailed] = useState(false);
@@ -17,6 +18,32 @@ const Main = () => {
   const emailRemove = localEmail?.split("@")[0];
 
   const userData = useAppSelector((state) => state.userData.data);
+  const login = useAppSelector((state) => state.Login.isLogin);
+
+  useEffect(() => {
+    if (login) {
+      const today = new Date();
+      const currentMonth = today.getMonth();
+      const currnetYear = today.getFullYear();
+      const currentTime = today.getTime();
+
+      const futureExpireTime = new Date(
+        currnetYear,
+        currentMonth + 1,
+        1
+      ).getTime();
+
+      const remadingTime = futureExpireTime - currentTime;
+
+      let nextMonth = setTimeout(() => {
+        dispatch(userDataStoreAction.MonthlyUpdateTest());
+      }, remadingTime);
+
+      return () => {
+        clearTimeout(nextMonth);
+      };
+    }
+  }, [dispatch, login]);
 
   useEffect(() => {
     const test = () => {
@@ -41,7 +68,7 @@ const Main = () => {
   return (
     <SideBar>
       {failed ? (
-        <p className="text-center">Error Loading Data </p>
+        <p className="text-center"> Error Loading Data </p>
       ) : (
         <div className="flex p-4 gap-2 h-screen">
           <div className="w-1/2 flex flex-col gap-2 h-full">
@@ -68,4 +95,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default React.memo(Main);

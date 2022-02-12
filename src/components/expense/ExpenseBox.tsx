@@ -5,6 +5,7 @@ import { useAppSelector } from "../../hooks/storeHooks";
 import { PlusIcon } from "@heroicons/react/solid";
 import ReactPaginate from "react-paginate";
 import { expense } from "../../type/userDataType";
+import React from "react";
 
 const ExpenseBox = () => {
   const [isAddNewExpense, setIsAddNewExpense] = useState(false);
@@ -89,4 +90,4 @@ const ExpenseBox = () => {
   );
 };
 
-export default ExpenseBox;
+export default React.memo(ExpenseBox);
