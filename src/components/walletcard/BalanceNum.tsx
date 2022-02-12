@@ -20,7 +20,7 @@ const BalanceNum = () => {
   return (
     <div>
       <p className="text-3xl font-medium">Balance</p>
-      <div className="text-3xl font-medium gap-1 flex">
+      <div className="text-3xl font-medium gap-1 flex justify-center">
         $
         {balance < 1000000 ? (
           <AnimatedNumbers

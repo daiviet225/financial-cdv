@@ -44,7 +44,7 @@ const Main = () => {
         <p className="text-center">Error Loading Data </p>
       ) : (
         <div className="flex p-4 gap-2 h-screen">
-          <div className="w-1/2 flex flex-col gap-2 ">
+          <div className="w-1/2 flex flex-col gap-2 h-full">
             <div className="flex gap-2 h-1/2">
               <WalletCard />
               <MonthBalanceCard MonthData={userData.thisMonth} label="This" />
