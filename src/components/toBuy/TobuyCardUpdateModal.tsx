@@ -1,4 +1,4 @@
-import { FC, useRef, FormEvent } from "react";
+import { FC, useRef, FormEvent, useState, ChangeEvent } from "react";
 import { Dialog } from "@headlessui/react";
 import { useAppDispatch } from "../../hooks/storeHooks";
 import { userDataStoreAction } from "../../store/userDataStore";
@@ -11,14 +11,39 @@ const TobuyCardUpdateModal: FC<{
   index: number;
 }> = (props) => {
   const costRef = useRef<HTMLInputElement>(null);
+
   const dispatch = useAppDispatch();
+
   const today = new Date();
+  const day = today.getDate();
+  const month = today.getMonth() + 1;
+  const year = today.getFullYear();
   const defaultValue = today.toLocaleDateString("en-CA");
+  const [date, setDate] = useState(defaultValue);
+
+  const [dateError, setDateError] = useState(false);
+  const [costErro, setCostError] = useState(false);
 
   const passToSpending = (event: FormEvent) => {
     event.preventDefault();
 
     const enterCost = +costRef.current!.value;
+    const enterDate = date;
+    const dateSplit = enterDate.split("-");
+
+    if (enterCost < 1) {
+      setCostError(true);
+      return;
+    }
+
+    if (
+      +dateSplit[1] !== month ||
+      +dateSplit[0] !== year ||
+      +dateSplit[2] > day
+    ) {
+      setDateError(true);
+      return;
+    }
 
     dispatch(
       userDataStoreAction.addNewExpense({
@@ -29,6 +54,16 @@ const TobuyCardUpdateModal: FC<{
     );
     dispatch(userDataStoreAction.removeToBuy(props.index));
   };
+
+  const dateChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setDate(event.target.value);
+  };
+
+  const unError = () => {
+    setCostError(false);
+    setDateError(false);
+  };
+
   const removeToBuy = () => {
     dispatch(userDataStoreAction.removeToBuy(props.index));
   };
@@ -55,8 +90,27 @@ const TobuyCardUpdateModal: FC<{
             type="number"
             id="for"
             placeholder={"number"}
+            onFocus={unError}
             ref={costRef}
-            className="w-3/4 rounded-md p-1 focus:border-purple-500 focus:ring-purple-500"
+            className={`w-3/4 rounded-md p-1 focus:border-purple-500 focus:ring-purple-500 ${
+              costErro && "bg-red-300"
+            }`}
+          />
+        </div>
+
+        <div className="mx-auto w-1/2 flex gap-2 items-center">
+          <label htmlFor="date" className="text-lg">
+            Date
+          </label>
+          <input
+            type="date"
+            id="date"
+            defaultValue={defaultValue}
+            className={`w-3/4 rounded-md p-1 focus:border-purple-500 focus:ring-purple-500 ${
+              dateError && "bg-red-300"
+            }`}
+            onFocus={unError}
+            onChange={dateChangeHandler}
           />
         </div>
 
@@ -65,7 +119,7 @@ const TobuyCardUpdateModal: FC<{
             className="text-white bg-purple-500 rounded-md p-2 hover:bg-purple-400"
             onClick={passToSpending}
           >
-            Add
+            Buy
           </button>
 
           <button

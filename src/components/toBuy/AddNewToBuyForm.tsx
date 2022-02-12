@@ -55,7 +55,7 @@ const AddNewSavingForm: FC<{ openAddTobuy: () => void; isOpen: boolean }> = (
       >
         <div className="flex items-center">
           <label htmlFor="for" className="text-lg text-center w-2/6">
-            To Buy
+            To List
           </label>
           <input
             type="text"

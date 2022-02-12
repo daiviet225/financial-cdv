@@ -61,7 +61,7 @@ const SideBar: FC = (props) => {
               className="bg-green-400 rounded-md text-md p-2 font-medium text-white hover:bg-green-500"
               onClick={changeOpenState}
             >
-              update Income, Balance, Limit
+              Set Income, Balance, Limit
             </button>
           </div>
 

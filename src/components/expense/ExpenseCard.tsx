@@ -37,6 +37,7 @@ const ExpenseCard: FC<{
         index={index}
         forName={forName}
         cost={cost}
+        date={date}
       />
       <div
         className="bg-emerald-400 text-white rounded-md p-2 flex text-lg font-medium items-center justify-between relative hover:bg-emerald-500 cursor-pointer"

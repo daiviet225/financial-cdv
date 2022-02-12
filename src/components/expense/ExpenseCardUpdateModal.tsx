@@ -10,32 +10,33 @@ const ExpenseCardUpdateModal: FC<{
   index: number;
   forName: string;
   cost: number;
+  date: string;
 }> = (props) => {
+  const { isOpen, index, forName, cost, date } = props;
   const dispatch = useAppDispatch();
+  const time = date.split("-");
 
   const removeSpending = () => {
     dispatch(
       userDataStoreAction.removeExpense({
-        cost: props.cost,
-        index: props.index,
+        cost: cost,
+        index: index,
       })
     );
   };
 
   return (
     <Dialog
-      open={props.isOpen}
+      open={isOpen}
       onClose={() => props.openCloseModal()}
       className="fixed z-10 inset-0 overflow-y-auto"
     >
       <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
-      <div className="bg-white rounded-md p-2 mx-auto relative mt-36 w-1/3 border-4 border-emerald-500 flex flex-col gap-2">
-        <p className="text-2xl font-medium text-center break-words mx-5">
-          {props.forName}
-        </p>
-        <p className="text-2xl font-medium text-center">${props.cost}</p>
-
+      <div className="bg-white rounded-md p-2 mx-auto relative mt-36 w-1/3 border-4 border-emerald-500 flex flex-col gap-2 text-center font-medium">
+        <p className="text-xl">{`${time[2]} / ${time[1]} / ${time[0]}`}</p>
+        <p className="text-2xl font-medium break-words mx-5">{forName}</p>
+        <p className="text-2xl font-medium">${cost}</p>
         <div className="flex gap-5 justify-center select-none">
           <button
             className="text-white bg-emerald-500 rounded-md p-2 hover:bg-emerald-400"

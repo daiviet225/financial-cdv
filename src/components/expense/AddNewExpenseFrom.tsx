@@ -63,7 +63,7 @@ const AddNewExpenseFrom: FC<{ openAddExpense: () => void; isOpen: boolean }> = (
       return;
     }
 
-    if (enterCost < 1) {
+    if (enterCost < 0) {
       setCostError(true);
       return;
     }
