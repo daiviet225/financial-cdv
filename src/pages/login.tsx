@@ -5,7 +5,6 @@ import { loginStoreAction } from "../store/loginStore";
 import { useAppDispatch } from "../hooks/storeHooks";
 import axios from "axios";
 import stonk from "../images/stonk2.jpg";
-import React from "react";
 
 const Login = () => {
   const [invalid, setInvalid] = useState(false);
@@ -138,4 +137,4 @@ const Login = () => {
   );
 };
 
-export default React.memo(Login);
+export default Login;

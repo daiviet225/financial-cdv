@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import stonk from "../images/stonk2.jpg";
-import React from "react";
 
 const FrontPage = () => {
   return (
@@ -29,4 +28,4 @@ const FrontPage = () => {
   );
 };
 
-export default React.memo(FrontPage);
+export default FrontPage;

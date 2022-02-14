@@ -8,7 +8,6 @@ import ExpenseBox from "../components/expense/ExpenseBox";
 import ToBuyBox from "../components/toBuy/TobuyBox";
 import SideBar from "../components/SideBar";
 import ChartCard from "../components/ChartCard";
-import React from "react";
 
 const Main = () => {
   const [failed, setFailed] = useState(false);
@@ -98,4 +97,4 @@ const Main = () => {
   );
 };
 
-export default React.memo(Main);
+export default Main;
