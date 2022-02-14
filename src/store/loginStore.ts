@@ -11,7 +11,7 @@ const loginStore = createSlice({
   name: "login",
   initialState: loginStoreInitial,
   reducers: {
-    signUp(state, action: { payload: { email: string; userName: string } }) {},
+    signUp() {},
     login(state, action: { payload: { token: string; email: string } }) {
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("email", action.payload.email);

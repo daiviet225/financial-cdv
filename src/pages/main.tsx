@@ -66,32 +66,35 @@ const Main = () => {
   }, [dispatch, emailRemove]);
 
   return (
-    <SideBar>
-      {failed ? (
-        <p className="text-center"> Error Loading Data </p>
-      ) : (
-        <div className="flex p-4 gap-2 h-screen">
-          <div className="w-1/2 flex flex-col gap-2 h-full">
-            <div className="flex gap-2 h-1/2">
-              <WalletCard />
-              <MonthBalanceCard MonthData={userData.thisMonth} label="This" />
-              <MonthBalanceCard MonthData={userData.lastMonth} label="Last" />
+    <div className="h-screen flex">
+      <SideBar />
+      <div className="w-11/12 h-full">
+        {failed ? (
+          <p className="text-center"> Error Loading Data </p>
+        ) : (
+          <div className="flex p-4 gap-2 h-screen">
+            <div className="w-1/2 flex flex-col gap-2 h-full">
+              <div className="flex gap-2 h-1/2">
+                <WalletCard />
+                <MonthBalanceCard MonthData={userData.thisMonth} label="This" />
+                <MonthBalanceCard MonthData={userData.lastMonth} label="Last" />
+              </div>
+
+              <div className="bg-white rounded-md border-4 border-blue-400 p-2 h-1/2">
+                <ChartCard />
+              </div>
             </div>
 
-            <div className="bg-white rounded-md border-4 border-blue-400 p-2 h-1/2">
-              <ChartCard />
+            <div className="w-1/2">
+              <div className="flex gap-2 h-full">
+                <ExpenseBox />
+                <ToBuyBox />
+              </div>
             </div>
           </div>
-
-          <div className="w-1/2">
-            <div className="flex gap-2 h-full">
-              <ExpenseBox />
-              <ToBuyBox />
-            </div>
-          </div>
-        </div>
-      )}
-    </SideBar>
+        )}
+      </div>
+    </div>
   );
 };
 

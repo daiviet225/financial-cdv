@@ -4,6 +4,7 @@ import { userDataStoreAction } from "../store/userDataStore";
 import { loginStoreAction } from "../store/loginStore";
 import { FC, useState } from "react";
 import UpdateModal from "./modal/UpdateModal";
+import React from "react";
 
 const SideBar: FC = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,58 +34,53 @@ const SideBar: FC = (props) => {
 
   return (
     <>
-      {isOpen && (
-        <UpdateModal isOpen={isOpen} changeOpenState={changeOpenState} />
-      )}
-      <div className="flex">
-        <div className="bg-slate-300 flex flex-col w-1/12 h-screen items-center justify-between">
-          <div className="flex-col flex gap-4 px-1 select-none">
-            <Link
-              className="text-2xl text-center font-bold mx-1 my-3 pb-2 bg-green-400 rounded-md text-white block"
-              to={"/"}
-            >
-              Co-LoGo
-            </Link>
-            {isLogin && (
-              <p className="text-2xl font-medium text-center break-words">
-                {userData.user}
-              </p>
-            )}
+      <UpdateModal isOpen={isOpen} changeOpenState={changeOpenState} />
+      <div className="bg-slate-300 flex flex-col w-1/12 h-screen items-center justify-between">
+        <div className="flex-col flex gap-4 px-1 select-none">
+          <Link
+            className="text-2xl text-center font-bold mx-1 my-3 pb-2 bg-green-400 rounded-md text-white block"
+            to={"/"}
+          >
+            Co-LoGo
+          </Link>
+          {isLogin && (
+            <p className="text-2xl font-medium text-center break-words">
+              {userData.user}
+            </p>
+          )}
 
-            <button
-              className="bg-green-400 rounded-md text-md p-2 font-medium text-white hover:bg-green-500"
-              onClick={changeOpenState}
-            >
-              Set Income, Balance, Limit
-            </button>
-          </div>
-
-          <div className="flex-col flex gap-4 mb-4 ">
-            {isLogin ? (
-              <>
-                <button
-                  className="bg-yellow-400 rounded-md text-xl p-2 font-medium hover:bg-yellow-300 text-white select-none"
-                  onClick={logout}
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              !isOnloginPage && (
-                <button
-                  className="bg-green-400 rounded-md text-xl p-2 font-medium hover:bg-green-500 text-white select-none"
-                  onClick={goToLogin}
-                >
-                  Login
-                </button>
-              )
-            )}
-          </div>
+          <button
+            className="bg-green-400 rounded-md text-md p-2 font-medium text-white hover:bg-green-500"
+            onClick={changeOpenState}
+          >
+            Set Income, Balance, Limit
+          </button>
         </div>
-        <div className="w-11/12 h-screen">{props.children}</div>
+
+        <div className="flex-col flex gap-4 mb-4 ">
+          {isLogin ? (
+            <>
+              <button
+                className="bg-yellow-400 rounded-md text-xl p-2 font-medium hover:bg-yellow-300 text-white select-none"
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            !isOnloginPage && (
+              <button
+                className="bg-green-400 rounded-md text-xl p-2 font-medium hover:bg-green-500 text-white select-none"
+                onClick={goToLogin}
+              >
+                Login
+              </button>
+            )
+          )}
+        </div>
       </div>
     </>
   );
 };
 
-export default SideBar;
+export default React.memo(SideBar);

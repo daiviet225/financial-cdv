@@ -58,7 +58,7 @@ const Signup = () => {
         }
       )
       .then((res) => {
-        dispatch(loginStoreAction.signUp({ email, userName }));
+        dispatch(loginStoreAction.signUp());
         emailReset();
         passwordReset();
         userNameReset();
