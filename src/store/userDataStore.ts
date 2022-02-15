@@ -22,6 +22,8 @@ const userDatainitialState: userDatainitialType = {
   },
 };
 
+const today = new Date();
+
 const userDataStore = createSlice({
   name: "userData",
   initialState: userDatainitialState,
@@ -77,7 +79,7 @@ const userDataStore = createSlice({
       }
 
       state.data.thisMonth.spending += action.payload.cost;
-      state.data.chartData[5] = state.data.thisMonth.spending;
+      state.data.chartData[today.getMonth()] = state.data.thisMonth.spending;
 
       state.data.balance -= action.payload.cost;
     },
@@ -90,7 +92,7 @@ const userDataStore = createSlice({
       state.data.expense = filter;
 
       state.data.thisMonth.spending -= action.payload.cost;
-      state.data.chartData[5] = state.data.thisMonth.spending;
+      state.data.chartData[today.getMonth()] = state.data.thisMonth.spending;
 
       state.data.balance += action.payload.cost;
     },
@@ -115,9 +117,6 @@ const userDataStore = createSlice({
       const oldData = { ...state.data };
       const oldthisMonthData = { ...state.data.thisMonth };
 
-      state.data.chartData.shift();
-      state.data.chartData.push(oldthisMonthData.spending);
-
       state.data.lastMonth = oldthisMonthData;
       state.data.balance = oldData.balance + oldData.income;
 
@@ -125,6 +124,10 @@ const userDataStore = createSlice({
       state.data.thisMonth.limit = oldthisMonthData.limit;
 
       state.data.expense = [];
+
+      if (today.getMonth() === 0) {
+        state.data.chartData = [];
+      }
     },
 
     resetState(state) {

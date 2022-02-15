@@ -20,7 +20,7 @@ function* createUserDataOnSignUp(action: {
     income: 0,
     expense: [],
     toBuy: [],
-    chartData: [0, 0, 0, 0, 0, 0],
+    chartData: [],
   };
 
   yield call(() => {
