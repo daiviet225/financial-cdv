@@ -40,13 +40,33 @@ const ChartCard = () => {
     "Dec",
   ];
 
-  let ChartLabels = monthByName.slice(month - 2, month + 2);
+  let ChartLabels = monthByName.slice(month, month + 6);
 
   if (month === 0) {
-    ChartLabels = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
+    ChartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
   }
 
   if (month === 1) {
+    ChartLabels = ["Feb", "Mar", "Apr", "May", "Jun", "Jul"];
+  }
+
+  if (month === 7) {
+    ChartLabels = ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"];
+  }
+
+  if (month === 8) {
+    ChartLabels = ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb"];
+  }
+
+  if (month === 9) {
+    ChartLabels = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
+  }
+
+  if (month === 10) {
+    ChartLabels = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
+  }
+
+  if (month === 11) {
     ChartLabels = ["Dec", "Jan", "Feb", "Mar", "Apr", "May"];
   }
 

@@ -4,6 +4,7 @@ import { loginStoreAction } from "../store/loginStore";
 import { FC, useState } from "react";
 import UpdateModal from "./modal/UpdateModal";
 import React from "react";
+import { userDataStoreAction } from "../store/userDataStore";
 
 const SideBar: FC = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ const SideBar: FC = (props) => {
 
   const logout = () => {
     dispatch(loginStoreAction.logout());
+    dispatch(userDataStoreAction.resetState());
     navigate("/", { replace: true });
   };
 
