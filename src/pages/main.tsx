@@ -16,34 +16,6 @@ const Main = () => {
   const localEmail = localStorage?.getItem("email");
   const emailRemove = localEmail?.split("@")[0];
 
-  const userData = useAppSelector((state) => state.userData.data);
-  const login = useAppSelector((state) => state.Login.isLogin);
-
-  useEffect(() => {
-    if (login) {
-      const today = new Date();
-      const currentMonth = today.getMonth();
-      const currnetYear = today.getFullYear();
-      const currentTime = today.getTime();
-
-      const futureExpireTime = new Date(
-        currnetYear,
-        currentMonth + 1,
-        1
-      ).getTime();
-
-      const remadingTime = futureExpireTime - currentTime;
-
-      let nextMonth = setTimeout(() => {
-        dispatch(userDataStoreAction.MonthlyUpdateTest());
-      }, remadingTime);
-
-      return () => {
-        clearTimeout(nextMonth);
-      };
-    }
-  }, [dispatch, login]);
-
   useEffect(() => {
     const test = () => {
       axios
@@ -52,6 +24,7 @@ const Main = () => {
         )
         .then((res) => {
           const { data } = res;
+
           const key = Object.keys(data).toString();
           dispatch(userDataStoreAction.setFireBaseLocation(key));
           dispatch(userDataStoreAction.setUserData(data[key]));
@@ -63,6 +36,41 @@ const Main = () => {
     };
     test();
   }, [dispatch, emailRemove]);
+
+  const userData = useAppSelector((state) => state.userData.data);
+  const login = useAppSelector((state) => state.Login.isLogin);
+
+  useEffect(() => {
+    if (login && userData.lastLogin) {
+      const today = new Date();
+      const currentMonth = today.getMonth();
+      const currnetYear = today.getFullYear();
+      const currentTime = today.getTime();
+      const lastLoginMonth = userData.lastLogin.split("/")[0];
+
+      if (+lastLoginMonth !== currentMonth + 1) {
+        dispatch(userDataStoreAction.MonthlyUpdateTest());
+      }
+
+      const futureExpireTime = new Date(
+        currnetYear,
+        currentMonth + 1,
+        1
+      ).getTime();
+
+      const remadingTime = futureExpireTime - currentTime;
+
+      dispatch(userDataStoreAction.setLastLogin());
+
+      let nextMonth = setTimeout(() => {
+        dispatch(userDataStoreAction.MonthlyUpdateTest());
+      }, remadingTime);
+
+      return () => {
+        clearTimeout(nextMonth);
+      };
+    }
+  }, [dispatch, login, userData]);
 
   return (
     <div className="h-screen flex">

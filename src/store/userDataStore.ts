@@ -18,6 +18,7 @@ const userDatainitialState: userDatainitialType = {
     toBuy: [],
     income: 0,
     chartData: [],
+    lastLogin: "",
   },
 };
 
@@ -36,6 +37,7 @@ const userDataStore = createSlice({
         toBuy: [],
         income: 0,
         chartData: [],
+        lastLogin: "",
       };
       state.fireBaseLocation = "";
     },
@@ -46,6 +48,10 @@ const userDataStore = createSlice({
 
     setUserData(state, action) {
       state.data = { ...action.payload };
+    },
+
+    setLastLogin(state) {
+      state.data.lastLogin = new Date().toLocaleDateString();
     },
 
     updateIncome(state, action: { payload: number }) {
@@ -119,23 +125,6 @@ const userDataStore = createSlice({
       state.data.thisMonth.limit = oldthisMonthData.limit;
 
       state.data.expense = [];
-    },
-
-    resetState(state) {
-      state = {
-        fireBaseLocation: "",
-        data: {
-          email: "",
-          balance: 0,
-          thisMonth: { limit: 0, spending: 0 },
-          lastMonth: { limit: 0, spending: 0 },
-          user: "",
-          expense: [],
-          toBuy: [],
-          income: 0,
-          chartData: [],
-        },
-      };
     },
   },
 });

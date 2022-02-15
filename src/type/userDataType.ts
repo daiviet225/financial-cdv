@@ -20,4 +20,5 @@ export type userDataType = {
   toBuy: toBuyType[];
   income: number;
   chartData: number[];
+  lastLogin: string;
 };

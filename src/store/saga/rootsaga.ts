@@ -50,10 +50,11 @@ export function* rootsaga() {
   yield takeLatest(userDataStoreAction.MonthlyUpdateTest.type, uploadData);
   yield takeEvery(userDataStoreAction.removeExpense.type, uploadData);
   yield takeEvery(userDataStoreAction.addNewToBuy.type, uploadData);
-  yield takeEvery(userDataStoreAction.updateIncome, uploadData);
-  yield takeEvery(userDataStoreAction.updateBalance, uploadData);
-  yield takeEvery(userDataStoreAction.updateLimit, uploadData);
-  yield takeEvery(userDataStoreAction.removeToBuy, uploadData);
+  yield takeEvery(userDataStoreAction.updateIncome.type, uploadData);
+  yield takeEvery(userDataStoreAction.updateBalance.type, uploadData);
+  yield takeEvery(userDataStoreAction.updateLimit.type, uploadData);
+  yield takeEvery(userDataStoreAction.removeToBuy.type, uploadData);
+  yield takeLatest(userDataStoreAction.setLastLogin.type, uploadData);
 
   // signup action
   yield takeLatest(loginStoreAction.signUp.type, createUserDataOnSignUp);

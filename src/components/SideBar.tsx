@@ -1,6 +1,5 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/storeHooks";
-import { userDataStoreAction } from "../store/userDataStore";
 import { loginStoreAction } from "../store/loginStore";
 import { FC, useState } from "react";
 import UpdateModal from "./modal/UpdateModal";
@@ -22,9 +21,7 @@ const SideBar: FC = (props) => {
   };
 
   const logout = () => {
-    dispatch(userDataStoreAction.resetState());
     dispatch(loginStoreAction.logout());
-
     navigate("/", { replace: true });
   };
 

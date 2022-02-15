@@ -3,7 +3,6 @@ import { FC, FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
 import useInputWithInitialValue from "../../hooks/userInputWithInitialValue";
 import { userDataStoreAction } from "../../store/userDataStore";
-import React from "react";
 
 const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
   props
@@ -15,13 +14,13 @@ const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
     value: income,
     valueChangeHandler: incomeChangeHandler,
     inputBlurHandler: incomeBlurHandler,
-  } = useInputWithInitialValue((value) => value > 0, userData.income);
+  } = useInputWithInitialValue((value) => true, userData.income);
 
   const {
     value: balance,
     valueChangeHandler: balanceChangeHandler,
     inputBlurHandler: balanceBlurHandler,
-  } = useInputWithInitialValue((value) => value > 0, userData.balance);
+  } = useInputWithInitialValue((value) => true, userData.balance);
 
   const {
     value: limit,
@@ -91,7 +90,7 @@ const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
               onChange={limitChangeHandler}
               className="w-3/4 rounded-md p-1 focus:border-green-500 focus:ring-green-500"
             />
-          </div>{" "}
+          </div>
           {limithasError && (
             <p className="text-red-400 text-center">
               please enter number bigger than 0
@@ -118,4 +117,4 @@ const UpdateModal: FC<{ isOpen: boolean; changeOpenState: () => void }> = (
   );
 };
 
-export default React.memo(UpdateModal);
+export default UpdateModal;
