@@ -126,7 +126,7 @@ const userDataStore = createSlice({
       state.data.expense = [];
 
       if (today.getMonth() === 0) {
-        state.data.chartData = [];
+        state.data.chartData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       }
     },
 

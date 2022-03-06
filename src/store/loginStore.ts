@@ -21,7 +21,6 @@ const loginStore = createSlice({
     logout(state) {
       localStorage.removeItem("token");
       localStorage.removeItem("email");
-      localStorage.removeItem("lastLoginDate");
       state.isLogin = false;
     },
   },

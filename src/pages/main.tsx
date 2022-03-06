@@ -11,13 +11,16 @@ import ChartCard from "../components/ChartCard";
 
 const Main = () => {
   const [failed, setFailed] = useState(false);
+  const [doneTakeData, setDoneTakeData] = useState(false);
   const dispatch = useAppDispatch();
 
   const localEmail = localStorage?.getItem("email");
   const emailRemove = localEmail?.split("@")[0];
+  const userData = useAppSelector((state) => state.userData.data);
 
   useEffect(() => {
     const test = () => {
+      setDoneTakeData(false);
       axios
         .get(
           `https://react-test-7684d-default-rtdb.asia-southeast1.firebasedatabase.app/userData/${emailRemove}.json`
@@ -28,49 +31,58 @@ const Main = () => {
           const key = Object.keys(data).toString();
           dispatch(userDataStoreAction.setFireBaseLocation(key));
           dispatch(userDataStoreAction.setUserData(data[key]));
+          setDoneTakeData(true);
         })
         .catch((error) => {
           setFailed(true);
           console.log(error);
         });
     };
-    test();
+    if (emailRemove !== undefined) {
+      test();
+    }
   }, [dispatch, emailRemove]);
 
-  const userData = useAppSelector((state) => state.userData.data);
-  const login = useAppSelector((state) => state.Login.isLogin);
-
   useEffect(() => {
-    if (login && userData.lastLogin) {
-      const today = new Date();
-      const currentMonth = today.getMonth();
-      const currnetYear = today.getFullYear();
-      const currentTime = today.getTime();
-      const lastLoginMonth = userData.lastLogin.split("/")[0];
+    if (doneTakeData === true) {
+      if (userData.lastLogin) {
+        const today = new Date();
+        const currentMonth = today.getMonth();
+        const currnetYear = today.getFullYear();
+        const currentTime = today.getTime();
+        const currentDay = today.getDate();
+        const lastLoginMonth = userData.lastLogin.split("/")[0];
 
-      if (+lastLoginMonth !== currentMonth + 1) {
-        dispatch(userDataStoreAction.MonthlyUpdateTest());
+        if (+lastLoginMonth !== currentMonth + 1) {
+          dispatch(userDataStoreAction.MonthlyUpdateTest());
+        }
+
+        const futureExpireTime = new Date(
+          currnetYear,
+          currentMonth + 1,
+          1
+        ).getTime();
+
+        const remadingTime = futureExpireTime - currentTime;
+
+        let nextMonth: any;
+
+        if (currentDay > 20) {
+          nextMonth = setTimeout(() => {
+            console.log("why");
+          }, remadingTime);
+        }
+
+        dispatch(userDataStoreAction.setLastLogin());
+
+        return () => {
+          clearTimeout(nextMonth);
+        };
+      } else {
+        dispatch(userDataStoreAction.setLastLogin());
       }
-
-      const futureExpireTime = new Date(
-        currnetYear,
-        currentMonth + 1,
-        1
-      ).getTime();
-
-      const remadingTime = futureExpireTime - currentTime;
-
-      dispatch(userDataStoreAction.setLastLogin());
-
-      let nextMonth = setTimeout(() => {
-        dispatch(userDataStoreAction.MonthlyUpdateTest());
-      }, remadingTime);
-
-      return () => {
-        clearTimeout(nextMonth);
-      };
     }
-  }, [dispatch, login, userData]);
+  }, [dispatch, doneTakeData]);
 
   return (
     <div className="h-screen flex">
