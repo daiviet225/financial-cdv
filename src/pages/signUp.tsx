@@ -4,7 +4,7 @@ import useInput from "../hooks/userInput";
 import axios from "axios";
 import { useAppDispatch } from "../hooks/storeHooks";
 import { loginStoreAction } from "../store/loginStore";
-import stonk from "../images/stonk2.jpg";
+import front from "../images/front.png";
 
 const Signup = () => {
   const [error, setError] = useState(false);
@@ -71,9 +71,9 @@ const Signup = () => {
   return (
     <div
       className="h-screen bg-cover pt-32 select-none"
-      style={{ backgroundImage: `url(${stonk})` }}
+      style={{ backgroundImage: `url(${front})` }}
     >
-      <div className=" flex flex-col items-center justify-center bg-white w-1/4 p-3 mx-auto rounded-xl">
+      <div className=" flex flex-col items-center justify-center bg-white w-1/4 p-3 mx-auto rounded-xl border-2 border-slate-300">
         <p className=" text-3xl text-center my-5 font-medium">Sign-Up Form</p>
         <form className="w-full space-y-8" onSubmit={sumbitHandler}>
           <div>
